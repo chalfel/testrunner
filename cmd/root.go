@@ -17,6 +17,8 @@ var rootCmd = &cobra.Command{
 			BlockSize:   blockSize,
 			TestCommand: testCommand,
 			BasePort:    basePort,
+			FilePattern: filePattern,
+			Verbose:     verbose,
 		}
 		runner.RunTestBatches(config)
 	},
@@ -27,6 +29,8 @@ var (
 	blockSize   int
 	testCommand string
 	basePort    int
+	filePattern string
+	verbose     bool
 )
 
 func init() {
@@ -34,6 +38,8 @@ func init() {
 	rootCmd.Flags().IntVarP(&blockSize, "block-size", "b", 25, "Number of test files per PostgreSQL container")
 	rootCmd.Flags().StringVarP(&testCommand, "test-command", "c", "go test", "Command to execute each test file")
 	rootCmd.Flags().IntVarP(&basePort, "base-port", "p", 5433, "Base port for PostgreSQL containers")
+	rootCmd.Flags().StringVarP(&filePattern, "file-pattern", "P", "*_test.go", "File pattern to match test files")
+	rootCmd.Flags().BoolVarP(&verbose, "verbose", "v", false, "Enable verbose output")
 }
 
 func Execute() {
